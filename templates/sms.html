@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SMS Spam Detector</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='sms.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="/" class="back">
+
+        ← Back to Home
+
+    </a>
+
+    <div class="card">
+
+        <div class="icon">
+
+            📱
+
+        </div>
+
+        <h1>
+
+            SMS Spam Detection
+
+        </h1>
+
+        <p>
+
+            Paste your SMS below to check whether it is
+            <strong>Spam</strong> or <strong>Ham</strong>.
+
+        </p>
+
+        <form action="/sms"
+              method="POST">
+
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Type or paste your SMS..."
+                required></textarea>
+
+            <div class="counter">
+
+                Characters :
+                <span id="count">0</span>
+
+            </div>
+
+            <button>
+
+                Detect Spam
+
+            </button>
+
+        </form>
+
+        {% if prediction == 0 or prediction == 1 %}
+
+        <div class="result">
+
+            <h2>
+
+                Prediction
+
+            </h2>
+
+            <div class="{{ prediction_class }}">
+
+                {% if prediction == 0 %}
+                    🚨 Spam Message
+                {% else %}
+                    ✅ Not Spam
+                {% endif %}
+
+            </div>
+
+
+
+            {% if confidence %}
+
+            <p>
+
+                Confidence :
+                <strong>{{ confidence }}%</strong>
+
+            </p>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+        <div class="examples">
+
+            <h3>
+
+                Try Examples
+
+            </h3>
+
+            <ul>
+
+                <li>
+                    Congratulations! You've won ₹10,000.
+                    Click here to claim.
+                </li>
+
+                <li>
+                    Hey! I'm outside your house.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const textarea=document.getElementById("message");
+
+const counter=document.getElementById("count");
+
+textarea.addEventListener("input",()=>{
+
+counter.innerText=textarea.value.length;
+
+});
+
+</script>
+
+</body>
+
+</html>
