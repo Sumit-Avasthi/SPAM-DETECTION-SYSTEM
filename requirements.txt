@@ -1,5 +1,4 @@
 Pandas
 scikit-learn
 flask
-pickle
 numpy
